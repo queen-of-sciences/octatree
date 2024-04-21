@@ -10,6 +10,5 @@
 - 📘 A tree of digits 1 through 8, arranged by special rules
 
 ## Run Locally
-- 📐 `TEST CMD`
 - 🚀 `python octatree.py`
 
