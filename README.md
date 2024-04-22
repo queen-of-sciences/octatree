@@ -7,7 +7,7 @@
 
 ## Explanation
 - ℹ️ [MAT 2023 : Question 6](https://www.maths.ox.ac.uk/system/files/attachments/test23.pdf)
-- 📘 A tree of digits 1 through 8, arranged by special rules
+- 📘 A tree of digits 1 through 8, arranged by certain rules
 
 ## Run Locally
 - 🚀 `python octatree.py`
