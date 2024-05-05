@@ -10,5 +10,6 @@
 - 📘 A tree of digits 1 through 8, arranged by certain rules
 
 ## Run Locally
-- 🚀 `python octatree.py`
+- ⚙️ `pip3 install -r ./requirements.txt`
+- 🚀 `python3 octatree.py`
 

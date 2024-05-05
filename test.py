@@ -1,7 +1,3 @@
-import io
-import sys
-
-import temp2
 from PrettyPrint import PrettyPrintTree
 
 """
@@ -18,14 +14,14 @@ Example:
  7 
 """
 
-one = temp2.Tree(1)
-two = temp2.Tree(2)
-three = temp2.Tree(3)
-four = temp2.Tree(4)
-five = temp2.Tree(5)
-six = temp2.Tree(6)
-seven = temp2.Tree(7)
-eight = temp2.Tree(8)
+one = decode.Tree(1)
+two = decode.Tree(2)
+three = decode.Tree(3)
+four = decode.Tree(4)
+five = decode.Tree(5)
+six = decode.Tree(6)
+seven = decode.Tree(7)
+eight = decode.Tree(8)
 
 to_str = PrettyPrintTree(lambda x: x.children, lambda x: x.val, return_instead_of_print=True)
 
@@ -43,7 +39,7 @@ def test_decode(capsys):
     three.add_child(five)
     five.add_child(four)
 
-    assert to_str(tree) == to_str(temp2.decode("8538183"))
+    assert to_str(tree) == to_str(decode.decode("8538183"))
 
     # FixMe :: automated tests, double check manual first...
     # Note :: 8538183 is good, 6165886 is good, 8888888 is good, 8531183 is good, consider more edge cases and automated test it!

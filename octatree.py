@@ -1,3 +1,5 @@
+from prettyprint import PrettyPrintTree
+
 """
     Octatrees
         - All digits 1 to 8 are arranged in a tree
@@ -13,78 +15,86 @@
 """
 
 
+class Tree:
+    def __init__(self, value):
+        self.val = value
+        self.children = []
+
+    def add_child(self, child):
+        self.children.append(child)
+        return child
+
+
+nodes = {
+    '1': Tree(1),
+    '2': Tree(2),
+    '3': Tree(3),
+    '4': Tree(4),
+    '5': Tree(5),
+    '6': Tree(6),
+    '7': Tree(7),
+    '8': Tree(8)
+}
+
+pretty = PrettyPrintTree(lambda x: x.children, lambda x: x.val)
+
+
+def decode(string):
+    """ Draw the octatree for a given code of 7 digits"""
+    # 1. Reverse string
+    digits = list(string[::-1])
+
+    # 2. Obtain root
+    root = digits[0]
+
+    # 3. Obtain leaves
+    leaves = []
+    i = 1
+    while i <= 8:
+        if str(i) not in digits:
+            leaves.append(str(i))
+        i += 1
+
+    # 4. Construct tree
+    tree = nodes[root]
+    active = None
+    prev_active = None
+    for i in range(7):
+        this = digits[i]
+        prev = digits[i - 1] if i > 0 else None
+
+        if this == root:
+            if active is not None:
+                active.add_child(nodes[leaves.pop()])
+            active = tree
+
+        elif prev == root:
+            active.add_child(nodes[this])
+            active = nodes[this]
+
+        elif this < prev:
+            active.add_child(nodes[this])
+            active = nodes[this]
+
+        elif this >= prev:
+            prev_active.add_child(nodes[leaves.pop()])
+            active = nodes[this]
+
+        if i == 6:
+            active.add_child(nodes[leaves.pop()])
+
+        i += 1
+        prev_active = active
+
+    pretty(tree)
+    return tree
+
+
 def code(n):
     """ Print the code for a given octatree """
     # TODO
 
 
-def decode(string):
-    """ Draw the octatree for a given code of 7 digits"""
-    print(f"\nDecoding [{string}]")
+decode("8531183")
 
-    # 1. Reverse string
-    digits = list(string[::-1])
-
-    # 2. Remove the initial instance of root
-    root = digits[0]
-    rootless = digits[1:]
-
-    # 3. Construct branches
-    i = 0
-    branches = []
-    next_branch = [root]
-    while len(rootless) > 0:
-        current = rootless[i]
-        if len(rootless) == 1:  # Final Branch
-            if current == root:
-                next_branch.append("0")
-                branches.append(next_branch)
-                next_branch = []
-            next_branch.append(current)
-            next_branch.append("0")
-            del rootless[0]
-            branches.append(next_branch)
-        elif current == root:  # New Branch
-            next_branch.append("0")
-            branches.append(next_branch)
-            next_branch = [root]
-            del rootless[0:i + 1]
-            i = 0
-        elif i == 0:  # First Child
-            next_branch.append(current)
-            i += 1
-        elif current < rootless[i - 1]:  # Child Node
-            next_branch.append(current)
-            i += 1
-        elif current >= rootless[i - 1]:  # Sibling Node
-            next_branch.append("0")
-            branches.append(next_branch)
-            next_branch = [root]
-            del rootless[0:i]
-            i = 0
-
-    # 4. Find Leaves
-    leaves = []
-    i = 1
-    while i <= 8:
-        if str(i) not in digits:
-            leaves.append(i)
-        i += 1
-
-    print(leaves)
-
-    # 5. Insert Leaves
-    leaves.reverse()
-    for i in range(len(branches)):
-        for j in range(len(branches[i])):
-            if branches[i][j] == '0':
-                branches[i][j] = str(leaves.pop(0))
-
-    branches.sort()
-    print(branches)
-    return branches
-
-
-decode("8538183")
-# 6165886 -> # FixMe :: missing branch
-# 8888888
+code(None)
